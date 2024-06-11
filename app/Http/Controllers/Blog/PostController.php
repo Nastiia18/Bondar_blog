@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Blog;
 
+
+
 use App\Models\BlogPost;
 use Illuminate\Http\Request;
 
@@ -30,7 +32,7 @@ return view('blog.posts.index', compact('items'));
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**
@@ -62,6 +64,6 @@ return view('blog.posts.index', compact('items'));
      */
     public function destroy(string $id)
     {
-        //
+      
     }
 }
