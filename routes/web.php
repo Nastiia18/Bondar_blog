@@ -2,6 +2,8 @@
 use App\Http\Controllers\RestTestController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DiggingDeeperController;
+use App\Http\Controllers\Api\Blog\PostController; 
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -16,6 +18,7 @@ Route::middleware([
     })->name('dashboard');
 });
 Route::resource('rest', RestTestController::class)->names('restTest');
+
 
 Route::group([ 'namespace' => 'App\Http\Controllers\Blog', 'prefix' => 'blog'], function () {
     Route::resource('posts', PostController::class)->names('blog.posts');
@@ -52,3 +55,7 @@ Route::group($groupData, function () {
     ->except(['show'])                               //не робити маршрут для метода show
     ->names('blog.admin.posts');
  });
+
+ 
+// Додаємо маршрут для API запиту
+Route::get('api/blog/posts', [App\Http\Controllers\Api\Blog\PostController::class, 'index']);
