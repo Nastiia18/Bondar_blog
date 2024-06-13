@@ -16,4 +16,13 @@ class PostController extends Controller
         // Повертаємо пости у вигляді JSON
         return response()->json($posts);
     }
+
+    public function getPostById($id) 
+    {
+        // Отримуємо пост за його ID разом з користувачами та категоріями
+        $post = BlogPost::with(['user', 'category'])->findOrFail($id);
+
+        // Повертаємо пост у вигляді JSON
+        return response()->json($post);
+    }
 }

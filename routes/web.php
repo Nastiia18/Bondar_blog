@@ -59,3 +59,6 @@ Route::group($groupData, function () {
  
 // Додаємо маршрут для API запиту
 Route::get('api/blog/posts', [App\Http\Controllers\Api\Blog\PostController::class, 'index']);
+
+
+Route::get('api/blog/post/{id}', [App\Http\Controllers\Api\Blog\PostController::class, 'getPostById']);
