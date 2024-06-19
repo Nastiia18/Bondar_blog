@@ -15,6 +15,8 @@ class BlogPostFactory extends Factory
      *
      * @return array<string, mixed>
      */
+
+     //генерування даних для кожного нового запису BlogPost.
     public function definition(): array
     {
         $title = $this->faker->sentence(rand(3, 8), true);

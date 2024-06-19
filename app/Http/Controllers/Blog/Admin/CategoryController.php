@@ -20,6 +20,7 @@ class CategoryController extends BaseController
     public function __construct()
     {
         parent::__construct();
+        //app() є глобальною функцією, яка дозволяє отримати екземпляр будь-якого класу
         $this->blogCategoryRepository = app(BlogCategoryRepository::class);
     }
 
@@ -51,20 +52,18 @@ class CategoryController extends BaseController
      */
     public function store(BlogCategoryCreateRequest $request)
     {
-      $data = $request->input(); //отримаємо масив даних, які надійшли з форми
-      
+        $data = $request->validated();
+        $item = BlogCategory::create($data);
 
-      $item = (new BlogCategory())->create($data); //створюємо об'єкт і додаємо в БД
-
-      if ($item) {
-          return redirect()
-              ->route('blog.admin.categories.edit', [$item->id])
-              ->with(['success' => 'Успішно збережено']);
-      } else {
-          return back()
-              ->withErrors(['msg' => 'Помилка збереження'])
-              ->withInput();
-      }
+        if ($item) {
+            return redirect()
+                ->route('blog.admin.categories.edit', [$item->id])
+                ->with(['success' => 'Успішно збережено']);
+        } else {
+            return back()
+                ->withErrors(['msg' => 'Помилка збереження'])
+                ->withInput();
+        }
     }
 
     /**
@@ -73,6 +72,11 @@ class CategoryController extends BaseController
     public function show(string $id)
     {
        // dd(__METHOD__);
+       $item = $this->blogCategoryRepository->getEdit($id);
+       if (empty($item)) {
+           abort(404);
+       }
+       return view('blog.admin.categories.show', compact('item'));
     }
 
     /**
@@ -124,5 +128,11 @@ class CategoryController extends BaseController
     public function destroy(string $id)
     {
        // dd(__METHOD__);
+       $item = BlogCategory::findOrFail($id); // Знайдемо категорію за ідентифікатором або викинемо 404 помилку
+       $item->delete(); // Видалимо категорію з бази даних
+   
+       return redirect()
+           ->route('blog.admin.categories.index')
+           ->with(['success' => "Категорія з ID={$id} видалена успішно"]);
     }
 }

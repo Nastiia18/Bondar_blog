@@ -33,7 +33,7 @@ class BlogCategoriesTableSeeder extends Seeder
             'parent_id' => $parentId,
             ];
         }
-
+          //вставка даних в таблицю blog_categories
         DB::table('blog_categories')->insert($categories);
     }
 }

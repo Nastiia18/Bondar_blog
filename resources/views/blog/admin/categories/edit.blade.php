@@ -2,9 +2,10 @@
 
 @section('content')
  @php /** @var \App\Models\BlogCategory $item */ @endphp
+ /*Умова перевірки існування об'єкта $item*/
  @if ($item->exists)
     <form method="POST" action="{{ route('blog.admin.categories.update', $item->id) }}">
-    @method('PATCH')
+    @method('PATCH')/*додає приховане поле*/
  @else
     <form method="POST" action="{{ route('blog.admin.categories.store') }}">
  @endif

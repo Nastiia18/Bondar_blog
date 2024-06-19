@@ -21,7 +21,9 @@ abstract class CoreRepository
     /** CoreRepository constructor */
     public function __construct()
     {
+        // Вона приймає рядок ім'я класу і повертає його зареєстрований екземпляр з контейнера.
         $this->model = app($this->getModelClass()); //app('App\Models\BlogCategory')
+    
     }
     
     /**
